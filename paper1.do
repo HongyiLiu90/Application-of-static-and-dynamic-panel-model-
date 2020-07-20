@@ -7,7 +7,7 @@
 
 use paper1.dta,clear
 
-drop if (year<1998) | (year>2011) // get the dataset that we really want
+drop if (year<1998) | (year>2011) 
 *------ generate real value -------
 
 *1 panel data set up
@@ -25,11 +25,11 @@ g rpgdp = pgdp / rrpi
  }
 *4 generate fiscal decentralization ratio
  qui{
- g pfd = (be/popu)/(cgs*10000/np) ©
+ g pfd = (be/popu)/(cgs*10000/np) ï¿½
  g fd = be/(cgs*10000)
  g fd1 = bi / be 
  }
-label var fd1 "Ô¤ËãÄÚ²ÆÕş×ÔÖ÷"
+label var fd1 "é¢„ç®—å†…è´¢æ”¿è‡ªä¸»"
  *5 get real pi
 qui g rppi = (pi*10000/popu/rsi)
 
@@ -39,13 +39,13 @@ qui g rplandlea_p = (landlea_p /popu)/rrpi
 /*(1)    *----separate the dataset into three region and 
               separate into two parts(coast and noncoast)-------*/
 gen region=""
-qui replace region="¶«²¿" if inlist(id,1,2,3,6,9,10,11,13,15,19,21)
-qui replace region="ÖĞ²¿" if inlist(id,4,7,8,12,14,16,17,18)
-qui replace region="Î÷²¿" if inlist(id,5,20,22,23,24,25,26,27,28,29,30,31)
+qui replace region="ä¸œéƒ¨" if inlist(id,1,2,3,6,9,10,11,13,15,19,21)
+qui replace region="ä¸­éƒ¨" if inlist(id,4,7,8,12,14,16,17,18)
+qui replace region="è¥¿éƒ¨" if inlist(id,5,20,22,23,24,25,26,27,28,29,30,31)
 sencode region,gen(regioncode)
 gen district=""
-qui replace district="ÑØº£" if inlist(prov_num,2,3,6,9,10,11,13,15,19,21)
-qui replace district="ÄÚÂ½" if inlist(prov_num,1,4,5,7,8,12,14,16,17,18,20,22,23,24,25,26,27,28,29,30,31)
+qui replace district="æ²¿æµ·" if inlist(prov_num,2,3,6,9,10,11,13,15,19,21)
+qui replace district="å†…é™†" if inlist(prov_num,1,4,5,7,8,12,14,16,17,18,20,22,23,24,25,26,27,28,29,30,31)
 sencode district,gen(districtcode)
 order id year prov_num prov region regioncode district districtcode
 
@@ -90,58 +90,58 @@ gen z = fd1*L.lnlandlea_sq
 gen ppi = pi*10000/popu
 gen rpgi = gi*10000/popu/rsi
 gen plandlea_sq = landlea_sq*10000/popu
-label var edu "¸ßÖĞÑ§ÀúÒÔÉÏÕ¼×ÜÈË¿Ú±È£¨%£©"
-label var price_land "ÍÁµØ¼Û¸ñ(ÍòÔª/¹«Çê)"
-label var rpgdp "ÈË¾ùÊµ¼ÊGDP(Ôª)"
-label var rppi "ÈË¾ùÊµ¼ÊË½ÈËÍ¶×Ê(Ôª)"
-label var rpgi "ÈË¾ùÊµ¼Ê¹«¹²Í¶×Ê(Ôª)"
-label var fd1 "µØ·½Ô¤ËãÄÚ²ÆÕş×ÔÖ÷¶È"
-label var PT "¹ãÒåºê¹ÛË°¸º(%)"
-label var plandlea_sq "ÈË¾ùÍÁµØ³öÈÃÃæ»ı(¹«Çê/ÈË)"
-label var rplandlea_p "ÈË¾ùÊµ¼ÊÍÁµØ³öÈÃÊÕÈë(Ôª/ÈË)"
-label var inf "Í¨»õÅòÕÍÂÊ(%)"
+label var edu "é«˜ä¸­å­¦å†ä»¥ä¸Šå æ€»äººå£æ¯”ï¼ˆ%ï¼‰"
+label var price_land "åœŸåœ°ä»·æ ¼(ä¸‡å…ƒ/å…¬é¡·)"
+label var rpgdp "äººå‡å®é™…GDP(å…ƒ)"
+label var rppi "äººå‡å®é™…ç§äººæŠ•èµ„(å…ƒ)"
+label var rpgi "äººå‡å®é™…å…¬å…±æŠ•èµ„(å…ƒ)"
+label var fd1 "åœ°æ–¹é¢„ç®—å†…è´¢æ”¿è‡ªä¸»åº¦"
+label var PT "å¹¿ä¹‰å®è§‚ç¨è´Ÿ(%)"
+label var plandlea_sq "äººå‡åœŸåœ°å‡ºè®©é¢ç§¯(å…¬é¡·/äºº)"
+label var rplandlea_p "äººå‡å®é™…åœŸåœ°å‡ºè®©æ”¶å…¥(å…ƒ/äºº)"
+label var inf "é€šè´§è†¨èƒ€ç‡(%)"
  drop if id ==26
 
 *------------------graph------------------
 twoway (scatter  perlp pgdp) (lfit  perlp pgdp) ///
 , ///
- xtitle("ÈË¾ùGDP(Ôª)", margin(medsmall)) ///
- ytitle("ÈË¾ùÍÁµØ³öÈÃ½ğ(Ôª)") ///
+ xtitle("äººå‡GDP(å…ƒ)", margin(medsmall)) ///
+ ytitle("äººå‡åœŸåœ°å‡ºè®©é‡‘(å…ƒ)") ///
   ylabel(0(4000)8000) ymtick(##1) ///
   xlabel(0(20000)80000) xmtick(##3) ///
- legend(label(1 "É¢µã") label(2 "ÄâºÏ") size(*0.7)) ///
- note("×ÊÁÏÀ´Ô´£º1999-2012Äê¡¶ÖĞ¹ú¹úÍÁ×ÊÔ´Äê¼ø¡·ºÍ¡¶ÖĞ¹úÍ³¼ÆÄê¼ø¡·",size(small)) ///
- caption("ËµÃ÷£ºÊ¡¼¶Êı¾İ",size(small)) scheme(s1mono) ///
+ legend(label(1 "æ•£ç‚¹") label(2 "æ‹Ÿåˆ") size(*0.7)) ///
+ note("èµ„æ–™æ¥æºï¼š1999-2012å¹´ã€Šä¸­å›½å›½åœŸèµ„æºå¹´é‰´ã€‹å’Œã€Šä¸­å›½ç»Ÿè®¡å¹´é‰´ã€‹",size(small)) ///
+ caption("è¯´æ˜ï¼šçœçº§æ•°æ®",size(small)) scheme(s1mono) ///
  saving(paper1.gph, replace)
 twoway (scatter  perlr pgdp) (lfit  perlr pgdp) ///
 ,  ///
- xtitle("ÈË¾ùGDP(Ôª)", margin(medsmall)) ///
- ytitle("ÈË¾ùÍÁµØ³öÈÃ´¿ÊÕÒæ(Ôª)") ///
+ xtitle("äººå‡GDP(å…ƒ)", margin(medsmall)) ///
+ ytitle("äººå‡åœŸåœ°å‡ºè®©çº¯æ”¶ç›Š(å…ƒ)") ///
  ylabel(0(1400)3500) ymtick(##1) ///
  xlabel(0(20000)80000) xmtick(##3) ///
- legend(label(1 "É¢µã") label(2 "ÄâºÏ") size(*0.7)) ///
- note("×ÊÁÏÀ´Ô´£º2004-2009Äê¡¶ÖĞ¹ú¹úÍÁ×ÊÔ´Äê¼ø¡·ºÍ¡¶ÖĞ¹úÍ³¼ÆÄê¼ø¡·",size(small)) ///
- caption("ËµÃ÷£ºÊ¡¼¶Êı¾İ",size(small)) scheme(s1mono) ///
+ legend(label(1 "æ•£ç‚¹") label(2 "æ‹Ÿåˆ") size(*0.7)) ///
+ note("èµ„æ–™æ¥æºï¼š2004-2009å¹´ã€Šä¸­å›½å›½åœŸèµ„æºå¹´é‰´ã€‹å’Œã€Šä¸­å›½ç»Ÿè®¡å¹´é‰´ã€‹",size(small)) ///
+ caption("è¯´æ˜ï¼šçœçº§æ•°æ®",size(small)) scheme(s1mono) ///
  saving(paper2.gph, replace)
  twoway (scatter  perlp ppi) (lfit  perlp ppi) ///
  ,  ///
- xtitle("ÈË¾ùË½ÈËÍ¶×Ê(Ôª)", margin(medsmall)) ///
- ytitle("ÈË¾ùÍÁµØ³öÈÃ½ğ(Ôª)") ///
+ xtitle("äººå‡ç§äººæŠ•èµ„(å…ƒ)", margin(medsmall)) ///
+ ytitle("äººå‡åœŸåœ°å‡ºè®©é‡‘(å…ƒ)") ///
   ylabel(0(4000)8000) ymtick(##1) ///
   xlabel(0(10000)60000) xmtick(##3) ///
- legend(label(1 "É¢µã") label(2 "ÄâºÏ") size(*0.7)) ///
- note("×ÊÁÏÀ´Ô´£º1999-2012Äê¡¶ÖĞ¹ú¹úÍÁ×ÊÔ´Äê¼ø¡·ºÍ¸÷µØÇøÀúÄêÍ³¼ÆÄê¼ø",size(small)) ///
- caption("ËµÃ÷£ºÊ¡¼¶Êı¾İ",size(small)) scheme(s1mono) ///
+ legend(label(1 "æ•£ç‚¹") label(2 "æ‹Ÿåˆ") size(*0.7)) ///
+ note("èµ„æ–™æ¥æºï¼š1999-2012å¹´ã€Šä¸­å›½å›½åœŸèµ„æºå¹´é‰´ã€‹å’Œå„åœ°åŒºå†å¹´ç»Ÿè®¡å¹´é‰´",size(small)) ///
+ caption("è¯´æ˜ï¼šçœçº§æ•°æ®",size(small)) scheme(s1mono) ///
  saving(paper3.gph, replace)
  twoway (scatter  perlr ppi) (lfit  perlr ppi) ///
 ,  ///
- xtitle("ÈË¾ùË½ÈËÍ¶×Ê(Ôª)", margin(medsmall)) ///
- ytitle("ÈË¾ùÍÁµØ³öÈÃ´¿ÊÕÒæ(Ôª)") ///
+ xtitle("äººå‡ç§äººæŠ•èµ„(å…ƒ)", margin(medsmall)) ///
+ ytitle("äººå‡åœŸåœ°å‡ºè®©çº¯æ”¶ç›Š(å…ƒ)") ///
  ylabel(0(1600)3200) ymtick(##1) ///
  xlabel(0(8000)40000) xmtick(##3) ///
- legend(label(1 "É¢µã") label(2 "ÄâºÏ") size(*0.7)) ///
- note("×ÊÁÏÀ´Ô´£º2004-2009Äê¡¶ÖĞ¹ú¹úÍÁ×ÊÔ´Äê¼ø¡·ºÍ¸÷µØÇøÀúÄêÍ³¼ÆÄê¼ø",size(small)) ///
- caption("ËµÃ÷£ºÊ¡¼¶Êı¾İ",size(small)) scheme(s1mono) ///
+ legend(label(1 "æ•£ç‚¹") label(2 "æ‹Ÿåˆ") size(*0.7)) ///
+ note("èµ„æ–™æ¥æºï¼š2004-2009å¹´ã€Šä¸­å›½å›½åœŸèµ„æºå¹´é‰´ã€‹å’Œå„åœ°åŒºå†å¹´ç»Ÿè®¡å¹´é‰´",size(small)) ///
+ caption("è¯´æ˜ï¼šçœçº§æ•°æ®",size(small)) scheme(s1mono) ///
  saving(paper4.gph, replace)
  graph combine paper1.gph paper2.gph paper3.gph paper4.gph, scheme(s1mono)
  
@@ -198,12 +198,12 @@ xtreg D.lnrpgdp D.lnrppi D.lnrpgi FDI_ind fd1 PT L.edu inf L(0/1).lnlandlea_n  y
 est store gre4
 test yr2=yr3=yr4=yr5=yr6=yr7=yr8=yr9=yr10=yr11=yr12=yr13=yr14=0
 outreg2 [gfe1 gfe2 gfe3 gfe4 gre1 gre2 gre3 gre4] using result1, word replace ///
- title("±í1:ÍÁµØ¶Ô¾­¼ÃÔö³¤µÄ¾²Ì¬Ğ§Ó¦" )  /// // (T1)
+ title("è¡¨1:åœŸåœ°å¯¹ç»æµå¢é•¿çš„é™æ€æ•ˆåº”" )  /// // (T1)
  tdec(2) rdec(3) r2 e(F) /// // (T3)
  nonote /// // (T4)
- addnote("×¢£º(1)***,**,*·Ö±ğ±íÊ¾ÔÚ1%,5%ºÍ10%Ë®Æ½ÉÏÏÔÖø;", ///
- "(2)À¨ºÅÖĞÎª±ê×¼Îó;", ///
- "(3)ÆäËü×¢ÊÍÓï¾ä¡£")
+ addnote("æ³¨ï¼š(1)***,**,*åˆ†åˆ«è¡¨ç¤ºåœ¨1%,5%å’Œ10%æ°´å¹³ä¸Šæ˜¾è‘—;", ///
+ "(2)æ‹¬å·ä¸­ä¸ºæ ‡å‡†è¯¯;", ///
+ "(3)å…¶å®ƒæ³¨é‡Šè¯­å¥ã€‚")
  
  *----------Hausman test ----------------
  qui xtreg D.lnrpgdp D.lnrppi D.lnrpgi FDI_ind fd1 PT L.edu inf L(0/1).lnplandlea_sq z yr*,fe
@@ -260,12 +260,12 @@ xtreg D.lnrppi D.lnrpgdp D.lnrpgi FDI_ind fd1 PT L.edu inf L(0/1).lnlandlea_n r 
 est store pre4
 test yr2=yr3=yr4=yr5=yr6=yr7=yr8=yr9=yr10=yr11=yr12=yr13=yr14=0
 outreg2 [pfe1 pfe2 pfe3 pfe4 pre1 pre2 pre3 pre4] using result2, word replace ///
- title("±í2:ÍÁµØ¶ÔË½ÈËÍ¶×ÊµÄ¾²Ì¬Ğ§Ó¦" )  /// // (T1)
+ title("è¡¨2:åœŸåœ°å¯¹ç§äººæŠ•èµ„çš„é™æ€æ•ˆåº”" )  /// // (T1)
  tdec(2) rdec(3) r2 e(F) /// // (T3)
  nonote /// // (T4)
- addnote("×¢£º(1)***,**,*·Ö±ğ±íÊ¾ÔÚ1%,5%ºÍ10%Ë®Æ½ÉÏÏÔÖø;", ///
- "(2)À¨ºÅÖĞÎª±ê×¼Îó;", ///
- "(3)ÆäËü×¢ÊÍÓï¾ä¡£")
+ addnote("æ³¨ï¼š(1)***,**,*åˆ†åˆ«è¡¨ç¤ºåœ¨1%,5%å’Œ10%æ°´å¹³ä¸Šæ˜¾è‘—;", ///
+ "(2)æ‹¬å·ä¸­ä¸ºæ ‡å‡†è¯¯;", ///
+ "(3)å…¶å®ƒæ³¨é‡Šè¯­å¥ã€‚")
  
  *----------Hausman test ------------------*
  qui xtreg D.lnrppi D.lnrpgdp D.lnrpgi FDI_ind fd1 PT L.edu inf L(0/1).lnplandlea_sq z r yr*,fe
@@ -334,12 +334,12 @@ local mm "fd_1s fd_2s sys_GMM1 sys_GMM2 sys_GMM3 OLS FE"
  local ss "ar2 ar2p sargan sar_df sarganp"
   esttab `mm',mtitle(`mm') scalar(`ss')
    outreg2 [fd_1s fd_2s sys_GMM1 sys_GMM2 sys_GMM3 OLS FE] using result3, word replace  ///
- title("±í3:ÖĞ¹ú¾­¼ÃÔö³¤ÓëÍÁµØ²ÆÕşµÄ¶¯Ì¬Ãæ°åFDÓësys-GMM¹À¼Æ1" )  /// // (T1)
+ title("è¡¨3:ä¸­å›½ç»æµå¢é•¿ä¸åœŸåœ°è´¢æ”¿çš„åŠ¨æ€é¢æ¿FDä¸sys-GMMä¼°è®¡1" )  /// // (T1)
  tdec(2) rdec(3) r2 e(F)   /// // (T3)
  nonote /// // (T4)
- addnote("×¢£º(1)***,**,*·Ö±ğ±íÊ¾ÔÚ1%,5%ºÍ10%Ë®Æ½ÉÏÏÔÖø;", ///
- "(2)À¨ºÅÖĞÎª±ê×¼Îó;", ///
- "(3)ÆäËü×¢ÊÍÓï¾ä¡£")
+ addnote("æ³¨ï¼š(1)***,**,*åˆ†åˆ«è¡¨ç¤ºåœ¨1%,5%å’Œ10%æ°´å¹³ä¸Šæ˜¾è‘—;", ///
+ "(2)æ‹¬å·ä¸­ä¸ºæ ‡å‡†è¯¯;", ///
+ "(3)å…¶å®ƒæ³¨é‡Šè¯­å¥ã€‚")
  esttab fd_1s fd_2s sys_GMM1 sys_GMM2 sys_GMM3 OLS FE using result4.rtf,  replace ///
  compress nogap b(%6.3f) se(%6.2f) scalars(ar2 ar2p sargan sar_df sarganp) ///
  star(* 0.1 ** 0.05 *** 0.01) obslast
