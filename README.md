@@ -1,1 +1,1 @@
-# Application-of-static-and-dynamic-panel-model-
+# Static-and-dynamic-panel-model
